@@ -42,7 +42,7 @@
                     </GridLayout>
                 </TabViewItem.view>
             </TabViewItem>
-            <TabViewItem title="Meus Cupons">
+            <TabViewItem title="INDISPONÍVEIS">
                 <TabViewItem.view>
                     <GridLayout rows="auto, *">
                         <Label text="Seus cupons resgatados" 
