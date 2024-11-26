@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" 
+      navigatingTo="onNavigatingTo">
+    <ActionBar class="bg-purple-600 text-white">
+        <NavigationButton android.systemIcon="ic_menu_back" 
+                         ios.systemIcon="2"
+                         tap="{{ onBackTap }}" />
+        <Label text="Gerenciar Cupons" class="action-bar-title" />
+    </ActionBar>
+    
+    <GridLayout rows="auto, *">
+        <Button text="+ Criar Novo Cupom" 
+                tap="{{ onCreateCoupon }}" 
+                class="bg-purple-600 text-white p-4 m-2 rounded-lg" 
+                row="0" />
+        
+        <ListView items="{{ coupons }}" 
+                  row="1" 
+                  class="list-group">
+            <ListView.itemTemplate>
+                <GridLayout columns="*, auto" 
+                           class="p-2 border-b border-gray-200">
+                    <StackLayout col="0">
+                        <Label text="{{ name }}" class="font-bold" />
+                        <Label text="{{ description }}" class="text-gray-600" />
+                        <Label text="{{ 'Desconto: ' + discount + '%' }}" class="text-purple-600" />
+                    </StackLayout>
+                    <Label text="{{ status }}" 
+                           col="1" 
+                           class="{{ status === 'Ativo' ? 'text-green-600' : 'text-red-600' }}" />
+                </GridLayout>
+            </ListView.itemTemplate>
+        </ListView>
+    </GridLayout>
+</Page>

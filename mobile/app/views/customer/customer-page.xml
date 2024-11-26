@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" 
+      navigatingTo="onNavigatingTo">
+    <ActionBar class="bg-purple-600 text-white">
+        <NavigationButton android.systemIcon="ic_menu_back" 
+                         ios.systemIcon="2"
+                         tap="{{ onBackTap }}" />
+        <Label text="Cupons Disponíveis" class="action-bar-title" />
+    </ActionBar>
+    
+    <TabView selectedTabTextColor="#7c3aed">
+        <TabView.items>
+            <TabViewItem title="Disponíveis">
+                <TabViewItem.view>
+                    <GridLayout rows="auto, *">
+                        <Label text="Cupons disponíveis para você" 
+                               class="text-lg font-semibold p-4" 
+                               row="0" />
+                        <ListView items="{{ availableCoupons }}" 
+                                  class="list-group" 
+                                  row="1">
+                            <ListView.itemTemplate>
+                                <GridLayout rows="auto, auto, auto" 
+                                          columns="*, auto" 
+                                          class="p-4 bg-white m-2 rounded-lg">
+                                    <Label text="{{ name }}" 
+                                           row="0" col="0" 
+                                           class="font-bold text-lg" />
+                                    <Label text="{{ description }}" 
+                                           row="1" col="0" 
+                                           class="text-gray-600" />
+                                    <Label text="{{ 'Desconto: ' + discount + '%' }}" 
+                                           row="2" col="0" 
+                                           class="text-purple-600 font-semibold" />
+                                    <Button text="Obter" 
+                                            tap="{{ $parents['Page'].onGetCoupon }}"
+                                            row="0" col="1" rowSpan="3"
+                                            class="bg-purple-600 text-white p-3 rounded-lg" />
+                                </GridLayout>
+                            </ListView.itemTemplate>
+                        </ListView>
+                    </GridLayout>
+                </TabViewItem.view>
+            </TabViewItem>
+            <TabViewItem title="Meus Cupons">
+                <TabViewItem.view>
+                    <GridLayout rows="auto, *">
+                        <Label text="Seus cupons resgatados" 
+                               class="text-lg font-semibold p-4" 
+                               row="0" />
+                        <ListView items="{{ usedCoupons }}" 
+                                  class="list-group" 
+                                  row="1">
+                            <ListView.itemTemplate>
+                                <StackLayout class="p-4 bg-white m-2 rounded-lg">
+                                    <Label text="{{ name }}" class="font-bold text-lg" />
+                                    <Label text="{{ 'Código: ' + code }}" class="text-purple-600" />
+                                    <Label text="{{ 'Status: ' + status }}" 
+                                           class="{{ status === 'Ativo' ? 'text-green-600' : 'text-red-600' }} font-medium" />
+                                    <Label text="{{ 'Resgatado em: ' + obtainedAt }}" class="text-gray-500 text-sm" />
+                                </StackLayout>
+                            </ListView.itemTemplate>
+                        </ListView>
+                    </GridLayout>
+                </TabViewItem.view>
+            </TabViewItem>
+        </TabView.items>
+    </TabView>
+</Page>

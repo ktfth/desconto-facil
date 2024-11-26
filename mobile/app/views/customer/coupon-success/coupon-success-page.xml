@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" 
+      navigatingTo="onNavigatingTo"
+      class="bg-purple-600">
+    
+    <StackLayout class="p-8">
+        <!-- Ícone de Sucesso -->
+        <Label text="✓" 
+               class="text-center text-white text-8xl mb-8" />
+        
+        <!-- Mensagem de Sucesso -->
+        <Label text="Cupom Confirmado!" 
+               class="text-center text-white text-3xl font-bold mb-4" />
+        
+        <Label text="Seu cupom foi validado com sucesso!" 
+               class="text-center text-white text-lg mb-8" />
+        
+        <!-- Detalhes do Cupom -->
+        <GridLayout rows="auto, auto, auto" 
+                   class="bg-white p-6 rounded-lg mb-8">
+            <StackLayout row="0" class="mb-4">
+                <Label text="{{ couponName }}" 
+                       class="text-xl font-bold text-purple-600" />
+                <Label text="{{ 'Desconto: ' + discount + '%' }}" 
+                       class="text-gray-600" />
+            </StackLayout>
+            
+            <StackLayout row="1" class="mb-4">
+                <Label text="Seu código:" class="text-gray-600" />
+                <Label text="{{ code }}" 
+                       class="text-2xl font-bold text-purple-600" />
+            </StackLayout>
+            
+            <Label text="{{ 'Válido até ' + validUntilFormatted }}" 
+                   row="2"
+                   class="text-gray-500" />
+        </GridLayout>
+        
+        <!-- Botão de Conclusão -->
+        <Button text="Concluir" 
+                tap="{{ onComplete }}"
+                class="bg-white text-purple-600 p-4 rounded-lg font-bold" />
+    </StackLayout>
+</Page>

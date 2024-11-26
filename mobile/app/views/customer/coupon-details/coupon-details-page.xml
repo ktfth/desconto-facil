@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" 
+      navigatingTo="onNavigatingTo">
+    <ActionBar class="bg-purple-600 text-white">
+        <NavigationButton android.systemIcon="ic_menu_back" 
+                         ios.systemIcon="2"
+                         tap="{{ onBackTap }}" />
+        <Label text="Detalhes do Cupom" class="action-bar-title" />
+    </ActionBar>
+    
+    <StackLayout class="p-4">
+        <GridLayout rows="auto, auto, auto, auto" columns="*" class="bg-white p-6 rounded-lg shadow-sm mb-4">
+            <StackLayout row="0" class="mb-4">
+                <Label text="{{ name }}" class="text-2xl font-bold mb-2" />
+                <Label text="{{ description }}" class="text-gray-600" />
+            </StackLayout>
+            
+            <StackLayout row="1" class="mb-4">
+                <Label text="Seu código de desconto:" class="text-gray-600 mb-2" />
+                <GridLayout columns="*, auto" class="bg-gray-100 p-4 rounded">
+                    <Label text="{{ code }}" class="text-xl font-bold text-purple-600" col="0" />
+                    <Button text="Copiar" tap="{{ onCopyCode }}" 
+                            class="bg-purple-600 text-white p-2 rounded" col="1" />
+                </GridLayout>
+            </StackLayout>
+            
+            <StackLayout row="2" class="border-t border-gray-200 pt-4 mb-4">
+                <Label text="Como usar:" class="font-bold mb-2" />
+                <Label text="1. Copie o código acima" class="text-gray-600" />
+                <Label text="2. Cole no campo de cupom no checkout" class="text-gray-600" />
+                <Label text="3. Aproveite seu desconto!" class="text-gray-600" />
+            </StackLayout>
+            
+            <StackLayout row="3" class="border-t border-gray-200 pt-4">
+                <Label text="Importante:" class="font-bold mb-2" />
+                <Label text="{{ 'Desconto de ' + discount + '%' }}" class="text-purple-600 font-bold" />
+                <Label text="{{ 'Válido até ' + validUntilFormatted }}" class="text-gray-600" />
+            </StackLayout>
+        </GridLayout>
+        
+        <Button text="Salvar no Meu Histórico" 
+                tap="{{ onSaveCoupon }}" 
+                class="bg-purple-600 text-white p-4 rounded-lg" />
+    </StackLayout>
+</Page>

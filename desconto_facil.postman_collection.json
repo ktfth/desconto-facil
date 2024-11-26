@@ -1,0 +1,107 @@
+{
+	"info": {
+		"_postman_id": "77464aa2-94e8-4375-b0d3-48983b95b687",
+		"name": "Desconto Fácil",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6394192"
+	},
+	"item": [
+		{
+			"name": "Criar Cupom",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"storeId\": \"store123\", \"couponCode\": \"SAVE10\", \"discount\": 10, \"validUntil\": \"2024-12-31\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://desconto-facil.deno.dev/create-coupon",
+					"protocol": "https",
+					"host": [
+						"desconto-facil",
+						"deno",
+						"dev"
+					],
+					"path": [
+						"create-coupon"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST \"http://localhost:8000/create-coupon\" \\\r\n-H \"Content-Type: application/json\" \\\r\n-d '{\"storeId\": \"store123\", \"couponCode\": \"SAVE10\", \"discount\": 10, \"validUntil\": \"2024-12-31\"}'\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Reclamar Cupom",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"storeId\": \"store123\", \"couponCode\": \"SAVE10\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://desconto-facil.deno.dev/redeem-coupon",
+					"protocol": "https",
+					"host": [
+						"desconto-facil",
+						"deno",
+						"dev"
+					],
+					"path": [
+						"redeem-coupon"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST \"http://localhost:8000/redeem-coupon\" \\\r\n-H \"Content-Type: application/json\" \\\r\n-d '{\"storeId\": \"store123\", \"couponCode\": \"SAVE10\"}'\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Cupons",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://desconto-facil.deno.dev/list-coupons?storeId=store123",
+					"protocol": "https",
+					"host": [
+						"desconto-facil",
+						"deno",
+						"dev"
+					],
+					"path": [
+						"list-coupons"
+					],
+					"query": [
+						{
+							"key": "storeId",
+							"value": "store123"
+						}
+					]
+				},
+				"description": "Generated from cURL: curl \"http://localhost:8000/list-coupons?storeId=store123\"\r\n"
+			},
+			"response": []
+		}
+	]
+}

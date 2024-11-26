@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" 
+      navigatingTo="onNavigatingTo" 
+      class="bg-gray-100">
+    <ActionBar class="bg-purple-600 text-white">
+        <Label text="DescontoFácil" class="action-bar-title" />
+    </ActionBar>
+    
+    <StackLayout class="p-4">
+        <Label text="Bem-vindo ao DescontoFácil" class="text-2xl font-bold text-center mb-4" />
+        
+        <Button text="Entrar como Loja" tap="{{ onStoreLogin }}" class="bg-purple-600 text-white p-4 rounded-lg mb-2" />
+        <Button text="Entrar como Cliente" tap="{{ onCustomerLogin }}" class="bg-purple-600 text-white p-4 rounded-lg" />
+    </StackLayout>
+</Page>

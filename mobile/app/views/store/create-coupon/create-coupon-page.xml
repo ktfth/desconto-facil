@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" 
+      navigatingTo="onNavigatingTo">
+    <ActionBar class="bg-purple-600 text-white">
+        <NavigationButton android.systemIcon="ic_menu_back" 
+                         ios.systemIcon="2"
+                         tap="{{ onBackTap }}" />
+        <Label text="Criar Novo Cupom" class="action-bar-title" />
+    </ActionBar>
+    
+    <ScrollView>
+        <StackLayout class="p-4">
+            <Label text="Nome do Cupom" class="text-gray-700 font-medium mb-1" />
+            <TextField text="{{ name }}" 
+                      hint="Ex: Desconto Verão" 
+                      class="p-3 mb-4 bg-white rounded border border-gray-300" />
+            
+            <Label text="Descrição" class="text-gray-700 font-medium mb-1" />
+            <TextField text="{{ description }}" 
+                      hint="Ex: 15% off em produtos de verão" 
+                      class="p-3 mb-4 bg-white rounded border border-gray-300" />
+            
+            <Label text="Percentual de Desconto" class="text-gray-700 font-medium mb-1" />
+            <TextField text="{{ discount }}" 
+                      hint="Ex: 15" 
+                      keyboardType="number"
+                      class="p-3 mb-4 bg-white rounded border border-gray-300" />
+            
+            <Label text="Quantidade Disponível" class="text-gray-700 font-medium mb-1" />
+            <TextField text="{{ quantity }}" 
+                      hint="Ex: 100" 
+                      keyboardType="number"
+                      class="p-3 mb-4 bg-white rounded border border-gray-300" />
+            
+            <Label text="Data de Validade" class="text-gray-700 font-medium mb-1" />
+            <DatePicker date="{{ validUntil }}" 
+                       class="mb-4" />
+            
+            <Label text="Código do Cupom" class="text-gray-700 font-medium mb-1" />
+            <GridLayout columns="*, auto" class="mb-4">
+                <TextField text="{{ code }}" 
+                          hint="Ex: VERAO15" 
+                          class="p-3 bg-white rounded border border-gray-300" 
+                          col="0" />
+                <Button text="Gerar" 
+                        tap="{{ generateCode }}" 
+                        class="bg-purple-600 text-white p-2 rounded ml-2" 
+                        col="1" />
+            </GridLayout>
+            
+            <Button text="Criar Cupom" 
+                    tap="{{ createCoupon }}" 
+                    class="bg-purple-600 text-white p-4 rounded-lg" />
+        </StackLayout>
+    </ScrollView>
+</Page>

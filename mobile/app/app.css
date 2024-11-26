@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+Page {
+    background-color: #f3f4f6;
+}
+
+ActionBar {
+    background-color: #7c3aed;
+    color: white;
+    text-align: center;
+}
+
+.action-bar-title {
+    horizontal-align: center;
+    text-align: center;
+    font-size: 20;
+    font-weight: 600;
+    padding: 0 16;
+}
+
+.btn-primary {
+    background-color: #7c3aed;
+    color: white;
+    font-size: 16;
+    padding: 12;
+    border-radius: 8;
+}
+
+.list-group {
+    separator-color: transparent;
+}
+
+.status-bar {
+    background-color: #7c3aed;
+}
+
+/* Platform specific styles */
+.ios Page {
+    margin-top: 0;
+}
+
+.android ActionBar {
+    padding-top: 0;
+}
