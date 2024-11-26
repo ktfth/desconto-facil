@@ -33,7 +33,7 @@ export class StoreViewModel extends Observable {
     }
 
     async _fetchData() {
-        const url = "https://desconto-facil.deno.dev/list-coupons?storeId=store123";
+        const url = "https://desconto-facil.deno.dev/list-coupons?storeId=store77";
     
         try {
           // Perform the fetch request
@@ -84,9 +84,11 @@ interface Coupon {
   
   interface ApiResponse {
     name: string;
+    description: string;
     couponCode: string;
     discount: number;
     validUntil: string;
     redeemed: boolean;
     obtainedAt: string;
+    quantity: number;
   }

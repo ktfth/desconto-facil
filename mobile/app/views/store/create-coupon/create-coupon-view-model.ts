@@ -1,4 +1,4 @@
-import { Observable, Frame, Dialogs } from '@nativescript/core';
+import { Dialogs, Frame, Observable } from '@nativescript/core';
 
 export class CreateCouponViewModel extends Observable {
     private _name: string = "";
@@ -81,6 +81,52 @@ export class CreateCouponViewModel extends Observable {
         this.code = code;
     }
 
+    async createCouponOnApi(
+        storeId: string,
+        name: string,
+        couponCode: string,
+        discount: number,
+        validUntil: string,
+        quantity: number,
+        description: string,
+      ): Promise<void> {
+        const url = "https://desconto-facil.deno.dev/create-coupon";
+        const payload = {
+          storeId,
+          name,
+          couponCode,
+          discount,
+          validUntil,
+          quantity,
+          description,
+        };
+      
+        try {
+          // Configura os cabeçalhos da requisição
+          const headers = new Headers();
+          headers.append("Content-Type", "application/json");
+      
+          // Realiza a requisição POST
+          const response = await fetch(url, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(payload),
+            redirect: "follow",
+          });
+      
+          // Verifica se a resposta foi bem-sucedida
+          if (!response.ok) {
+            throw new Error(`Erro HTTP! Status: ${response.status}`);
+          }
+      
+          // Processa a resposta como texto
+          const result = await response.text();
+          console.log(result);
+        } catch (error: any) {
+          console.error("Erro na requisição:", error);
+        }
+      }
+
     createCoupon() {
         // Validate fields
         if (!this.name || !this.description || !this.discount || !this.quantity || !this.code) {
@@ -103,15 +149,26 @@ export class CreateCouponViewModel extends Observable {
             status: "Ativo"
         };
 
-        // Show success message
-        Dialogs.alert({
-            title: "Sucesso",
-            message: "Cupom criado com sucesso!",
-            okButtonText: "OK"
-        }).then(() => {
-            // Navigate back to store page
-            Frame.topmost().goBack();
+        this.createCouponOnApi(
+            "store77",
+            newCoupon.name,
+            newCoupon.code,
+            newCoupon.discount,
+            newCoupon.validUntil.toISOString(),
+            newCoupon.quantity,
+            newCoupon.description
+        ).then(() => {
+            // Show success message
+            Dialogs.alert({
+                title: "Sucesso",
+                message: "Cupom criado com sucesso!",
+                okButtonText: "OK"
+            }).then(() => {
+                // Navigate back to store page
+                Frame.topmost().goBack();
+            });
         });
+
     }
 
     onBackTap() {

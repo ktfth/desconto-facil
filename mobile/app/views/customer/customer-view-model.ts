@@ -14,6 +14,7 @@ export class CustomerViewModel extends Observable {
       console.log("fetching data...");
 
       this._availableCoupons = data.map((coupon: ApiResponse): Coupon => {
+        console.log(coupon)
         return {
           name: coupon.couponCode,
           description: `${coupon.discount}% off em produtos de ${coupon.couponCode}`,
@@ -21,31 +22,33 @@ export class CustomerViewModel extends Observable {
           validUntil: coupon.validUntil,
           discount: coupon.discount,
           obtainedAt: coupon.obtainedAt,
+          quantity: coupon.quantity,
           status: coupon.redeemed
             ? "Usado"
             : coupon.validUntil < new Date().toISOString()
             ? "Expirado"
             : "Ativo"
         };
-      }).filter((coupon: Coupon) => coupon.status === "Ativo");
+      }).filter((coupon: Coupon) => coupon.quantity > 0);
 
       this.notifyPropertyChange("availableCoupons", this._availableCoupons);
 
       this._usedCoupons = data.map((coupon: ApiResponse): Coupon => {
         return {
-          name: coupon.couponCode,
-          description: `${coupon.discount}% off em produtos de ${coupon.couponCode}`,
+          name: coupon.name,
+          description: coupon.description,
           code: coupon.couponCode,
           validUntil: coupon.validUntil,
           discount: coupon.discount,
           obtainedAt: (new Date(coupon.obtainedAt)).toLocaleDateString('pt-BR'),
+          quantity: coupon.quantity,
           status: coupon.redeemed
             ? "Usado"
             : coupon.validUntil < new Date().toISOString()
             ? "Expirado"
             : "Ativo"
         };
-      }).filter((coupon: Coupon) => coupon.status !== "Ativo");
+      }).filter((coupon: Coupon) => coupon.quantity <= 0);
 
       this.notifyPropertyChange("usedCoupons", this._usedCoupons);
     });
@@ -98,7 +101,7 @@ export class CustomerViewModel extends Observable {
   }
 
   async _fetchData() {
-    const url = "https://desconto-facil.deno.dev/list-coupons?storeId=store123";
+    const url = "https://desconto-facil.deno.dev/list-coupons?storeId=store77";
 
     try {
       // Perform the fetch request
@@ -128,13 +131,16 @@ interface Coupon {
   available?: number;
   status?: string;
   obtainedAt?: string;
+  quantity?: number;
 }
 
 interface ApiResponse {
   name: string;
+  description: string;
   couponCode: string;
   discount: number;
   validUntil: string;
   redeemed: boolean;
   obtainedAt: string;
+  quantity: number;
 }
