@@ -20,19 +20,32 @@ export class CustomerViewModel extends Observable {
           code: coupon.couponCode,
           validUntil: coupon.validUntil,
           discount: coupon.discount,
+          obtainedAt: coupon.obtainedAt,
           status: coupon.redeemed
             ? "Usado"
             : coupon.validUntil < new Date().toISOString()
             ? "Expirado"
             : "Ativo"
         };
-      });
+      }).filter((coupon: Coupon) => coupon.status === "Ativo");
 
       this.notifyPropertyChange("availableCoupons", this._availableCoupons);
 
-      this._usedCoupons = this._availableCoupons.filter(
-        (coupon) => coupon.status === "Usado"
-      );
+      this._usedCoupons = data.map((coupon: ApiResponse): Coupon => {
+        return {
+          name: coupon.couponCode,
+          description: `${coupon.discount}% off em produtos de ${coupon.couponCode}`,
+          code: coupon.couponCode,
+          validUntil: coupon.validUntil,
+          discount: coupon.discount,
+          obtainedAt: (new Date(coupon.obtainedAt)).toLocaleDateString('pt-BR'),
+          status: coupon.redeemed
+            ? "Usado"
+            : coupon.validUntil < new Date().toISOString()
+            ? "Expirado"
+            : "Ativo"
+        };
+      }).filter((coupon: Coupon) => coupon.status !== "Ativo");
 
       this.notifyPropertyChange("usedCoupons", this._usedCoupons);
     });
@@ -123,4 +136,5 @@ interface ApiResponse {
   discount: number;
   validUntil: string;
   redeemed: boolean;
+  obtainedAt: string;
 }

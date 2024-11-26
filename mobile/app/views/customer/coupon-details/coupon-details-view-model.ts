@@ -1,4 +1,4 @@
-import { Observable, Frame, Dialogs, Utils } from '@nativescript/core';
+import { Dialogs, Frame, Observable, Utils } from '@nativescript/core';
 
 export class CouponDetailsViewModel extends Observable {
     private _name: string;
@@ -63,20 +63,59 @@ export class CouponDetailsViewModel extends Observable {
             inputType: "text"
         }).then(r => {
             if (r.result && r.text) {
-                // Simula validação do código (em produção, isso seria validado no backend)
-                if (r.text === "LOJISTA123") { // Código de exemplo
-                    this._isConfirmed = true;
-                    this.showSuccessScreen();
-                } else {
+                this._fetchData(r.text).then((ok) => {
+                    if (!ok) {
+                        Dialogs.alert({
+                            title: "Erro",
+                            message: "Código de confirmação inválido",
+                            okButtonText: "OK"
+                        }).then(() => {
+                            this._isConfirmed = false;
+                            Frame.topmost().navigate({
+                                moduleName: "views/customer/customer-page",
+                                clearHistory: true
+                            });
+                        });
+                    } else {
+                        this._isConfirmed = true;
+                        this.showSuccessScreen();
+                    }
+                }).catch((err) => {
                     Dialogs.alert({
                         title: "Erro",
                         message: "Código de confirmação inválido",
                         okButtonText: "OK"
                     });
-                }
+                });
             }
         });
     }
+
+    async _fetchData(couponCode: string) {
+        const url = "https://desconto-facil.deno.dev/redeem-coupon";
+        const payload = {
+          storeId: "store123",
+          couponCode,
+        };
+      
+        try {
+          // Configura os cabeçalhos da requisição
+          const headers = new Headers();
+          headers.append("Content-Type", "application/json");
+      
+          // Realiza a requisição POST
+          const response = await fetch(url, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(payload),
+            redirect: "follow"
+          });
+      
+          return response.ok;
+        } catch (error: any) {
+          console.error('Erro na requisição:', error);
+        }
+      }
 
     private showSuccessScreen() {
         Frame.topmost().navigate({
